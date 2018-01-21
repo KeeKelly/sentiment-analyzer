@@ -1,2 +1,4 @@
 Flask==0.12.1
 nltk==3.2.2
+gunicorn==19.7.1
+twython==3.6.0

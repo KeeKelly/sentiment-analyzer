@@ -1,4 +1,8 @@
 from flask import Flask, request, send_from_directory, jsonify
+import nltk
+nltk.download('vader_lexicon')
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
 app = Flask(__name__, static_url_path='/static')
 
 @app.route('/js/<path:path>')
@@ -13,8 +17,9 @@ def hello():
 
 @app.route("/get_sentiment", methods=['GET', 'POST'])
 def get_sentiment():
-    print(request.get_json())
-    return jsonify({'score': 1234})
+    sid = SentimentIntensityAnalyzer()
+    sentence = request.get_json()['input']
+    return jsonify(sid.polarity_scores(sentence))
 
 if __name__ == '__main__':
     app.run(debug=True)

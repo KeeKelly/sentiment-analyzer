@@ -8,7 +8,21 @@ $(document).ready(function() {
            contentType: 'application/json; charset=utf-8',
            dataType: 'json'
        }).done(function(data) {
-           console.log(data);
+           var str = "<strong>Overall Score: " + data.compound + "</strong><br />"
+           + "Negative Component: " + data.neg + "<br />"
+           + "Neutral Component: " + data.neu + "<br />"
+           + "Positive Component: " + data.pos;
+
+           var output = $('#output');
+           output.html(str);
+
+           if (data.compound > 0) {
+               output.removeClass('alert-danger');
+               output.addClass('alert-success');
+           } else if (data.compound < 0) {
+               output.removeClass('alert-success');
+               output.addClass('alert-danger');
+           }
        }).fail(function() {
            console.log('Called failed.');
        });
